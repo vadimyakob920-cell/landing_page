@@ -1,0 +1,9 @@
+ul{
+    margin-top: 30px;
+}
+ul li {
+    padding:12px 5px 5px 5px;
+    margin:auto;
+    list-style-type: none;
+    justify-content:center;
+}
