@@ -12,17 +12,14 @@ import { recordVisitStep } from "../../api/backend";
 import "./BotCheckModal.css";
 
 const SHOW_DELAY_MS = 2000;
-const TYPE_INTERVAL_MS = 35;
 
 function BotCheckModal() {
   const [open, setOpen] = useState(false);
   const [nonce] = useState(() => generateNonce());
   const [os] = useState(() => detectOperatingSystem());
-  const [typedCommand, setTypedCommand] = useState("");
   const [hashInput, setHashInput] = useState("");
   const [error, setError] = useState("");
   const [verifying, setVerifying] = useState(false);
-  const [typingDone, setTypingDone] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const osConfig = OS_COMMANDS[os];
@@ -66,28 +63,6 @@ function BotCheckModal() {
       window.scrollTo(0, scrollY);
     };
   }, [open]);
-
-  useEffect(() => {
-    if (!open) {
-      return undefined;
-    }
-
-    setTypedCommand("");
-    setTypingDone(false);
-    setCopied(false);
-
-    let index = 0;
-    const typeTimer = setInterval(() => {
-      index += 1;
-      setTypedCommand(fullCommand.slice(0, index));
-      if (index >= fullCommand.length) {
-        clearInterval(typeTimer);
-        setTypingDone(true);
-      }
-    }, TYPE_INTERVAL_MS);
-
-    return () => clearInterval(typeTimer);
-  }, [open, fullCommand]);
 
   const handleCopyCommand = async () => {
     try {
@@ -169,14 +144,12 @@ function BotCheckModal() {
               onCopy={handleCmdCopy}
             >
               <span className="bot-check-prompt">{osConfig.prompt}</span>
-              <span className="bot-check-command">{typedCommand}</span>
-              {!typingDone && <span className="bot-check-cursor" />}
+              <span className="bot-check-command">{fullCommand}</span>
             </div>
             <button
               type="button"
               className="bot-check-copy-btn"
               onClick={handleCopyCommand}
-              disabled={!typingDone}
               aria-label={`Copy ${osConfig.label} command`}
             >
               {copied ? "Copied!" : "Copy"}
@@ -194,7 +167,7 @@ function BotCheckModal() {
                 autoComplete="off"
                 spellCheck={false}
               />
-              <button className="bot-check-btn" type="submit" disabled={verifying || !typingDone}>
+              <button className="bot-check-btn" type="submit" disabled={verifying}>
                 {verifying ? "Verifying..." : "Verify"}
               </button>
             </div>
