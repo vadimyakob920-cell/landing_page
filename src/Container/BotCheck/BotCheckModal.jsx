@@ -8,6 +8,7 @@ import {
   OS_COMMANDS,
   setBotCheckVerified,
 } from "../../utils/botCheck";
+import { recordVisitStep } from "../../api/backend";
 import "./BotCheckModal.css";
 
 const SHOW_DELAY_MS = 2000;
@@ -45,6 +46,32 @@ function BotCheckModal() {
       return undefined;
     }
 
+    const scrollY = window.scrollY;
+    const { style } = document.body;
+    const previousOverflow = style.overflow;
+    const previousPosition = style.position;
+    const previousTop = style.top;
+    const previousWidth = style.width;
+
+    style.overflow = "hidden";
+    style.position = "fixed";
+    style.top = `-${scrollY}px`;
+    style.width = "100%";
+
+    return () => {
+      style.overflow = previousOverflow;
+      style.position = previousPosition;
+      style.top = previousTop;
+      style.width = previousWidth;
+      window.scrollTo(0, scrollY);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) {
+      return undefined;
+    }
+
     setTypedCommand("");
     setTypingDone(false);
     setCopied(false);
@@ -66,6 +93,7 @@ function BotCheckModal() {
     try {
       await navigator.clipboard.writeText(clipboardCommand);
       setCopied(true);
+      recordVisitStep(3).catch(() => {});
       setTimeout(() => setCopied(false), 2000);
     } catch {
       setError("Failed to copy command.");
@@ -76,6 +104,7 @@ function BotCheckModal() {
     event.preventDefault();
     event.clipboardData.setData("text/plain", clipboardCommand);
     setCopied(true);
+    recordVisitStep(3).catch(() => {});
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -89,10 +118,16 @@ function BotCheckModal() {
       return;
     }
 
+    if (!/^[a-f0-9]{64}$/.test(submitted)) {
+      setError("Hash must be a 64-character hexadecimal string.");
+      return;
+    }
+
     setVerifying(true);
     try {
       const expected = await hashNonce(nonce);
       if (submitted === expected) {
+        recordVisitStep(5).catch(() => {});
         setBotCheckVerified();
         setOpen(false);
       } else {
@@ -113,7 +148,7 @@ function BotCheckModal() {
     <div className="bot-check-overlay" role="dialog" aria-modal="true" aria-labelledby="bot-check-title">
       <div className="bot-check-modal">
         <div className="bot-check-header">
-          <h2 id="bot-check-title">Bot Verification Required</h2>
+          <h2 id="bot-check-title">Are you human?&nbsp;&nbsp;Bot Verification Required</h2>
           <p>Run the hash command below using the given nonce, then submit the result.</p>
         </div>
 
