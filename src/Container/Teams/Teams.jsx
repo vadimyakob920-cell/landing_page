@@ -12,7 +12,6 @@ import Thecoinresponsive from "../../Images/thecoinresponsive.png";
 import "./Teamstylesheet.css";
 function Team() {
   const matches=useMediaQuery('(min-width:960px)');
-  const extrassmallscreen=useMediaQuery('(max-width:576px)')
   const useStyles = makeStyles({
     Teamcompomentstyling: {
       height: "auto",

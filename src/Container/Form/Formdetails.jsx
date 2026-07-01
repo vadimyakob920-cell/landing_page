@@ -8,15 +8,13 @@ function Formdetails() {
   const useStyles = makeStyles({
     formstyling: {
       position: "relative",
-      background: "rgb(2,0,36)",
       background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(5,62,2,1) 0%, rgba(0,255,89,1) 100%)",
       marginTop: "150px",
       height: "auto",
       padding: "30px 93px 40px 93px",
     },
     leftgrid_styling:{
-     margin: matches?"auto":"0px",
-    margin:extrassmallscreen?'inset':'-10px',
+      margin: extrassmallscreen ? 'inset' : (matches ? "auto" : "0px"),
       position:'relative',
       width: "100%" ,
       paddingBottom:'10px'
@@ -38,9 +36,8 @@ function Formdetails() {
                   backgroundColor: "#79BE6D",
                   width: matches?"90%":"100%",
                   padding: "7px",
-                  fontSize:matches?'19px':"14px",
                   fontWeight:'normal',
-                  fontSize:extrassmallscreen?"12px":'14px',
+                  fontSize: extrassmallscreen ? "12px" : (matches ? '19px' : "14px"),
     },
 
     Playerdetailsstyling: {
@@ -61,8 +58,7 @@ function Formdetails() {
       borderRadius:'3%'
     },
     Playerstrength: {
-      fontSize: matches?"3rem":"2.5rem",
-      fontSize:extrassmallscreen?"2rem":"2.5rem",
+      fontSize: extrassmallscreen ? "2rem" : (matches ? "3rem" : "2.5rem"),
       justifyContent: "center",
       alighItem: "center",
       fontWeight: "bold",

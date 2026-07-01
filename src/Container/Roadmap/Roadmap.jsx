@@ -34,7 +34,7 @@ import to_wellinvester from "../../Images/image 15.png";
 import thirtyinvester from "../../Images/image 16.png";
 import Doublehand from "../../Images/doublehand.png";
 import logo from '../../Images/logo.png';
-import {Slide,Fade,Roll,Rotate} from 'react-reveal';
+import {Slide,Roll,Rotate} from 'react-reveal';
 var settings = {
   dots: true,
   infinite: true,
@@ -104,9 +104,8 @@ const Roadmap = () => {
       padding: "2% 0% 0% 2%",
       backgroundColor: "#0E0C16",
       overflow:'hidden',
-      margin:matches?"":"10px",
-      margin:extrassmallscreen?"":"auto",
-      marginTop:extrassmallscreen?"":"15px"
+      margin: extrassmallscreen ? "auto" : (matches ? "" : "10px"),
+      marginTop: extrassmallscreen ? "" : "15px"
     },
     doublehand:{
       marginTop:'-20%',
@@ -140,7 +139,7 @@ const Roadmap = () => {
         <Grid xs={12}>
         <Slide right> 
         <Typography className={classes.roadmaplogo}>
-            <img src={roadmaplogo} atl="" />
+            <img src={roadmaplogo} alt="" />
           </Typography>
           </Slide>
         </Grid>

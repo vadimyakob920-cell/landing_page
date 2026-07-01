@@ -25,17 +25,14 @@ const extraminssmallscreen=useMediaQuery('(min-width:576px)')
       color:'white'
     },
     Boxstyling:{
-      width: matches?"60%":"70%",
-      width:extrassmallscreen?"85%":"70%",
+      width: extrassmallscreen ? "85%" : (matches ? "60%" : "70%"),
       height: "100px",
       marginLeft:matches?"0px":"20px",
-      border: "1px solid  white",
       fontSize: matches?"20px":"15px",
       fontFamily: "Robot",
       fontWeight: "bold",
       padding: "5px 0px 5px 0px",
       border: "none",
-      background: "rgba(3,147,36,0.2)",
       background:"linear-gradient(79deg, rgba(3,147,36,1) 79%, rgba(0,0,0,1) 100%)",
     },
     uppergameplaystyle: {
@@ -91,8 +88,7 @@ const extraminssmallscreen=useMediaQuery('(min-width:576px)')
                 margin: extraminssmallscreen?"auto":"10px",
                 marginLeft:"50px",
                 textAlign: "left",
-                fontSize: matches?"16px":"16px",
-                fontSize: extrassmallscreen?"14px":"12px",
+                fontSize: extrassmallscreen ? "14px" : (matches ? "16px" : "12px"),
                 paddingTop: "10px",
                 fontWeight:'bold'
               }}

@@ -99,8 +99,11 @@ function Homepage() {
                <img
                 src={matches ? Dashboard:Responsiveimage}
                 alt=""
-                style={{width: matches?"80%":"500px",   width:extrassmallscreen?"300px":"500px",
-                marginTop:extrassmallscreen?"60px":"", height: matches?"900px":"70%",}}
+                style={{
+                  width: extrassmallscreen ? "300px" : (matches ? "80%" : "500px"),
+                  marginTop: extrassmallscreen ? "60px" : "",
+                  height: matches ? "900px" : "70%",
+                }}
                 classes={classes.Imagestyling}
               /> 
              </Rotate>

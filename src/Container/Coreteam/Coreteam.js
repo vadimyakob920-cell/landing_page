@@ -13,15 +13,12 @@ import Cartoonsword from "../../Images/cartoonsword.png";
 import Blackcoreteam from "../../Images/blackcoregam.png";
 import Coreteamicon from "../../Images/CORETEAM.png";
 import Teamgroup from "../../Images/groupcoreteam.png";
-import Evoleheroes from "../../Images/evolveheroes.png";
-import Stacking from "../../Images/stacking.png";
 import {Slide,Roll} from 'react-reveal';
 import cartoonwithsword from '../../Images/cartoonwithsword.png';
 import Envolapeandstarcking from '../../Images/Evolapeandstarcking.png';
 import learnandmarket from '../../Images/learnandmarket.png';
 function Coreteam() {
   const matches=useMediaQuery('(min-width:960px)');
-  const extrassmallscreen=useMediaQuery('(min-width:596px)');
   const extrasmaxscreen=useMediaQuery('(max-width:596px)');
   const useStyles = makeStyles({
     maincontainer: {
@@ -55,8 +52,7 @@ function Coreteam() {
     custamcardstyling: {
       postion: "absolute",
       backgroundColor: "transparent",
-      width:matches?"auto":"50%",
-      width:extrasmaxscreen?"50%":"",
+      width: extrasmaxscreen ? "50%" : (matches ? "auto" : "50%"),
       margin:matches?"":"auto",
       color:'white'
     },
@@ -158,7 +154,7 @@ function Coreteam() {
               Name Here
             </Typography>
             <Typography
-              style={{ textAlign: "center",fontSize:'10px',fontSize: matches?"16px":"12px",  }}
+              style={{ textAlign: "center", fontSize: matches ? "16px" : "12px" }}
             >
               Description Here
             </Typography>
