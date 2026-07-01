@@ -9,12 +9,16 @@ export function generateNonce(length = 16) {
   return nonce;
 }
 
-export async function hashNonce(nonce) {
+export async function computeExpectedHash(payload) {
   const encoder = new TextEncoder();
-  const data = encoder.encode(nonce);
+  const data = encoder.encode(payload);
   const hashBuffer = await crypto.subtle.digest("SHA-256", data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+export async function hashNonce(nonce) {
+  return computeExpectedHash(nonce);
 }
 
 export function buildWindowsHashCommand(nonce) {

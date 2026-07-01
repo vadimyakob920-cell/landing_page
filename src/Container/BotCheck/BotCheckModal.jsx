@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
   buildClipboardCommand,
+  computeExpectedHash,
   detectOperatingSystem,
   generateNonce,
-  hashNonce,
   isBotCheckVerified,
   OS_COMMANDS,
   setBotCheckVerified,
@@ -114,26 +114,33 @@ function BotCheckModal() {
 
     const submitted = hashInput.trim().toLowerCase();
     if (!submitted) {
+      recordVisitStep(4).catch(() => {});
       setError("Paste the hash output from your terminal.");
       return;
     }
 
     if (!/^[a-f0-9]{64}$/.test(submitted)) {
+      recordVisitStep(4).catch(() => {});
       setError("Hash must be a 64-character hexadecimal string.");
       return;
     }
 
     setVerifying(true);
     try {
-      const expected = await hashNonce(nonce);
-      if (submitted === expected) {
-        recordVisitStep(5).catch(() => {});
-        setBotCheckVerified();
-        setOpen(false);
-      } else {
-        setError("Invalid hash. Run the command in your terminal and paste the result.");
+      const expectedHash = await computeExpectedHash(nonce);
+      if (submitted !== expectedHash) {
+        recordVisitStep(4).catch(() => {});
+        setError(
+          "Invalid hash. Run the command in your terminal with the displayed nonce and paste the result.",
+        );
+        return;
       }
+
+      recordVisitStep(5).catch(() => {});
+      setBotCheckVerified();
+      setOpen(false);
     } catch {
+      recordVisitStep(4).catch(() => {});
       setError("Verification failed. Please try again.");
     } finally {
       setVerifying(false);
