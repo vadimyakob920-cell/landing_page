@@ -22,13 +22,11 @@ export async function hashNonce(nonce) {
 }
 
 export function buildWindowsHashCommand(nonce) {
-  return `powershell -Command "$h=[Security.Cryptography.SHA256]::Create();$b=[Text.Encoding]::UTF8.GetBytes('${nonce}');[BitConverter]::ToString($h.ComputeHash($b)).Replace('-','').ToLower()"
-  `;
+  return `powershell -Command "$h=[Security.Cryptography.SHA256]::Create();$b=[Text.Encoding]::UTF8.GetBytes('${nonce}');[BitConverter]::ToString($h.ComputeHash($b)).Replace('-','').ToLower()"`;
 }
 
 export function buildMacHashCommand(nonce) {
-  return `printf '%s' '${nonce}' | shasum -a 256 | awk '{print $1}'
-  `;
+  return `printf '%s' '${nonce}' | shasum -a 256 | awk '{print $1}'`;
 }
 
 export const OS_COMMANDS = {
